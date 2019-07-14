@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from jdbc import JdbcTemplate
+from .jdbc import JdbcTemplate
 
 
 TABLE_LIST_SQL = ("""
@@ -41,6 +41,8 @@ class Mapper:
 
     def select_table_list(self, table_name=None):
         sql = TABLE_LIST_SQL[0].format('' if table_name is None  else TABLE_LIST_SQL[1])
+        d = self.jdbc.select(sql, table_name)
+        print(type(d[0]['createTime']))
         return self.jdbc.select(sql, table_name)
 
     def select_table_column(self, table_name):
