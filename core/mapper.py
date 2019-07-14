@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-from .jdbc import JdbcTemplate
-
+from .jdbc import mapper
+from models import Table, Column
+from typing import List
 
 TABLE_LIST_SQL = ("""
     SELECT
         table_schema AS tableSchema,
         table_name AS tableName,
         table_comment AS tableComment,
-        engine,
+        engine AS engine,
         row_format AS rowFormat,
         create_time AS createTime,
         table_collation AS tableCollation
@@ -26,26 +27,20 @@ TABLE_COLUMN_SQL = """
         column_comment AS columnComment,
         is_nullable AS nullAble,
         column_key AS columnKey,
-        extra,
-        privileges
+        extra as extra,
+        privileges as privileges
       FROM
         information_schema.columns
       WHERE
         table_name=%s AND table_schema=(SELECT DATABASE())
 """
 
-class Mapper:
+@mapper
+def select_table_list(table_name: str = None) -> List[Table]:
+    return TABLE_LIST_SQL[0].format('' if table_name is None  else TABLE_LIST_SQL[1])
 
-    def __init__(self, jdbc):
-        self.jdbc = jdbc
-
-    def select_table_list(self, table_name=None):
-        sql = TABLE_LIST_SQL[0].format('' if table_name is None  else TABLE_LIST_SQL[1])
-        d = self.jdbc.select(sql, table_name)
-        print(type(d[0]['createTime']))
-        return self.jdbc.select(sql, table_name)
-
-    def select_table_column(self, table_name):
-        return self.jdbc.select(TABLE_COLUMN_SQL, table_name)
+@mapper
+def select_table_column(table_name: str) -> Column:
+    return TABLE_COLUMN_SQL
 
 

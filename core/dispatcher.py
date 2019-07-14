@@ -9,6 +9,7 @@ from http import HTTPStatus
 from .result import ResponseEntity
 
 HandleMapping = {  }
+Mappers = []
 
 def RestController(cls):
     global HandleMapping
@@ -25,8 +26,15 @@ def RestController(cls):
 
 class DispatcherHandler(BaseHTTPRequestHandler):
 
+    _globals = None
+
     def __init__(self, req, client_addr, server):
         BaseHTTPRequestHandler.__init__(self, req, client_addr, server)
+
+    @staticmethod
+    def init(_globals):
+        DispatcherHandler._globals = _globals
+        return DispatcherHandler
 
     def handle_one_request(self):
         try:
