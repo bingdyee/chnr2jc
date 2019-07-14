@@ -6,22 +6,24 @@ from core.mapper import *
 
 
 @RestController
-class UserController:
+class MainController:
 
     urls = {
-        '/index': 'index',
-        '/login': 'login'
+        '/tableList': 'table_list',
+        '/tableColumn': 'table_column',
+        '/cogen', 'generate_code'
     }
 
-    def __init__(self):
-        print('create')
-
-    def index(self, table_name=None):
+    def table_list(self, table_name=None):
         results = select_table_list(table_name)
         return [result.json() for result in results]
 
-    def login(self, name):
-        return select_table_column(name).json()
+    def table_column(self, table_name):
+        results = select_table_column(table_name)
+        return [result.json() for result in results]
+
+    def generate_code(self):
+        return ''
 
 
 if __name__ == '__main__':

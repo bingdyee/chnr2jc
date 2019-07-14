@@ -20,12 +20,19 @@ class JdbcTemplate:
         self.conn.close()
 
     def select(self, sql, params=None):
+        """
+        Select
+        Return: dict
+        """
         with self.conn.cursor(cursor=pymysql.cursors.DictCursor) as cursor:
             cursor.execute(sql, params)
             results = cursor.fetchall()
             return [row for row in results]
 
     def execute(self, sql, params=None):
+        """
+        For Delete Update Insert
+        """
         with self.conn.cursor() as cursor:
             state = cursor.execute(sql, params)
         self.conn.commit()
@@ -36,6 +43,9 @@ class JdbcTemplate:
 
 
 def mapper(func):
+    """@mapper
+    sql template & column to object
+    """
     @functools.wraps(func)
     def inner(*args, **kwargs):
         sql = func(*args, **kwargs)

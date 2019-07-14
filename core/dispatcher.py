@@ -26,6 +26,10 @@ def RestController(cls):
 
 class DispatcherHandler(BaseHTTPRequestHandler):
 
+    """HTTP request dispatcher class.
+    RESTful API
+    """
+
     _globals = None
 
     def __init__(self, req, client_addr, server):

@@ -40,7 +40,7 @@ def select_table_list(table_name: str = None) -> List[Table]:
     return TABLE_LIST_SQL[0].format('' if table_name is None  else TABLE_LIST_SQL[1])
 
 @mapper
-def select_table_column(table_name: str) -> Column:
+def select_table_column(table_name: str) -> List[Column]:
     return TABLE_COLUMN_SQL
 
 
