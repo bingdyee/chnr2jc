@@ -42,8 +42,11 @@ class UserController:
 
 
 if __name__ == '__main__':
-    port = 8002
+    # port = 8002
     
-    httpd = HTTPServer(('', port), DispatcherHandler)
-    print("Starting simple_httpd on port: " + str(httpd.server_port))
-    httpd.serve_forever()
+    # httpd = HTTPServer(('', port), DispatcherHandler)
+    # print("Starting simple_httpd on port: " + str(httpd.server_port))
+    # httpd.serve_forever()
+    from models import Table, Column
+    t = Table()
+    print(t.json())

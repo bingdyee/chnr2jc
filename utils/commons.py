@@ -39,3 +39,4 @@ def exec_cmd(cmd):
     with os.popen(cmd, 'r') as msg:
         for line in msg:
             print(line.rstrip())
+

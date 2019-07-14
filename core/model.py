@@ -2,10 +2,12 @@
 import json
 from datetime import datetime
 
+
 class Model:
 
-    def __init__(self, **props):
-        self.data = props
+    def __init__(self, data=None, **props):
+        data = {} if data is None else data
+        self._data =  {**data, **props}
 
     def __call__(self, key):
         return self.get(key)
@@ -17,13 +19,16 @@ class Model:
         self.set(key, value)
 
     def set(self, key, value):
-        self.data[key] = value
+        self._data[key] = value
 
     def get(self, key):
-        return self.data.get(key)
+        return self._data.get(key)
 
     def json(self):
-        for k, v in self.data.items():
+        for k, v in self._data.items():
             if isinstance(v, datetime):
-                self.data[k] = '2019-10-10'
-        return json.dumps(self.data)
+                self._data[k] = v.strftime('%Y-%m-%d %H:%M:%S')
+        for k, v in self.__dict__.items():
+            if not k.startswith('_'):
+                self._data[k] = v.strftime('%Y-%m-%d %H:%M:%S') if isinstance(v, datetime) else v
+        return json.dumps(self._data)
