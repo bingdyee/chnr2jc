@@ -7,6 +7,9 @@ class Model:
 
     def __init__(self, data=None):
         self.data = data
+    
+    def __call__(self):
+        return self.json()
 
     def json(self):
         rs = self.__dict__ if self.data is None else self.data

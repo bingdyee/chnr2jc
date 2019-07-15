@@ -7,6 +7,7 @@ import traceback
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
 from .result import ResponseEntity
+from .model import Model
 
 HandleMapping = {  }
 Mappers = []
@@ -29,6 +30,7 @@ class DispatcherHandler(BaseHTTPRequestHandler):
     """HTTP request dispatcher class.
     RESTful API
     """
+    PATH_PREFIX = 'file://'
 
     _globals = None
 
@@ -54,7 +56,7 @@ class DispatcherHandler(BaseHTTPRequestHandler):
                 return
             if not self.parse_request():
                 return
-            self.wfile.write(self.dispatcher())
+            self.dispatcher()
             self.wfile.flush()
         except socket.timeout as e:
             self.log_error("Request timed out: %r", e)
@@ -73,21 +75,29 @@ class DispatcherHandler(BaseHTTPRequestHandler):
             params = json.loads(params)
         return path, params
 
-    def dispatcher(self):
+    def send_headers(self, content_type='application/json;charset=utf-8'):
         self.send_response(200)
-        self.send_header("Content-type", "application/json;charset=utf-8")
+        self.send_header("Content-type", content_type)
         self.end_headers()
+
+    def dispatcher(self):
         try:
             path, params = self.handle_params()
             mapping = HandleMapping.get(path)
-            if mapping is not None:
-                method = getattr(mapping.get('class'), mapping.get('method'))
-                rs = method(mapping.get('class'), **params)
-                return ResponseEntity.ok(rs).encode('utf-8')
-            return ResponseEntity.error(404, 'Not Found').encode('utf-8')
+            if mapping is None:
+                result = ResponseEntity.error(404, 'Not Found')
+            else:
+                result = getattr(mapping.get('class'), mapping.get('method'))(mapping.get('class'), **params)
+                if isinstance(result, str) and result.startswith(DispatcherHandler.PATH_PREFIX):
+                    self.send_headers('application/x-zip-compressed;charset=utf-8')
+                    with open(result[len(DispatcherHandler.PATH_PREFIX):]) as rf:
+                        self.wfile.write(rf.read())
+                    return
         except:
             traceback.print_exc()
-            return ResponseEntity.error('Unknow Error').encode('utf-8')
+            result = ResponseEntity.error('Unknow Error')
+        self.send_headers()
+        self.wfile.write(result.encode('utf8'))
         
         
 
