@@ -4,10 +4,11 @@ import socket
 import urllib
 import functools
 import traceback
-from http.server import BaseHTTPRequestHandler
+from http.server import SimpleHTTPRequestHandler
 from http import HTTPStatus
-from .result import ResponseEntity
+from .result import ResponseEntity, File
 from .model import Model
+
 
 HandleMapping = {  }
 Mappers = []
@@ -18,24 +19,20 @@ def RestController(cls):
         urls = getattr(cls, 'urls')
         for k, v in urls.items():
             if HandleMapping.get(k) is not None:
-                raise
+                return
             HandleMapping[k] = {'class': cls, 'method': v}
     return cls
 
 
-
-
-class DispatcherHandler(BaseHTTPRequestHandler):
+class DispatcherHandler(SimpleHTTPRequestHandler):
 
     """HTTP request dispatcher class.
     RESTful API
     """
-    PATH_PREFIX = 'file://'
-
     _globals = None
 
     def __init__(self, req, client_addr, server):
-        BaseHTTPRequestHandler.__init__(self, req, client_addr, server)
+        SimpleHTTPRequestHandler.__init__(self, req, client_addr, server)
 
     @staticmethod
     def init(_globals):
@@ -75,9 +72,11 @@ class DispatcherHandler(BaseHTTPRequestHandler):
             params = json.loads(params)
         return path, params
 
-    def send_headers(self, content_type='application/json;charset=utf-8'):
+    def send_headers(self, content_type='application/json;charset=utf-8', disposition=None):
         self.send_response(200)
         self.send_header("Content-type", content_type)
+        if disposition:
+            self.send_header('Content-Disposition', disposition)
         self.end_headers()
 
     def dispatcher(self):
@@ -88,10 +87,10 @@ class DispatcherHandler(BaseHTTPRequestHandler):
                 result = ResponseEntity.error(404, 'Not Found')
             else:
                 result = getattr(mapping.get('class'), mapping.get('method'))(mapping.get('class'), **params)
-                if isinstance(result, str) and result.startswith(DispatcherHandler.PATH_PREFIX):
-                    self.send_headers('application/x-zip-compressed;charset=utf-8')
-                    with open(result[len(DispatcherHandler.PATH_PREFIX):]) as rf:
-                        self.wfile.write(rf.read())
+                if isinstance(result, File):
+                    self.send_headers(content_type=result.content_type, disposition=result.disposition)
+                    with open(result.path, 'rb') as rf:
+                        self.copyfile(rf, self.wfile)
                     return
         except:
             traceback.print_exc()

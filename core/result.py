@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import json
 from .model import Model
 
@@ -25,3 +26,11 @@ class ResponseEntity:
     def json(self):
         return json.dumps(self.__dict__)
 
+class File:
+
+    def __init__(self, path):
+        self.path = path
+        self.length = os.path.getsize(path)
+        self.filename = os.path.split(path)[1]
+        self.content_type = 'application/x-zip-compressed;charset=utf-8'
+        self.disposition = 'attachment;filename={}'.format(self.filename)

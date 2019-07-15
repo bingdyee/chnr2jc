@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from http.server import HTTPServer
+from http.server import HTTPServer, SimpleHTTPRequestHandler
 from core.dispatcher import DispatcherHandler, RestController
 from core.jdbc import JdbcTemplate
 from core.mapper import *
-from core.result import ResponseEntity
+from core.result import ResponseEntity, File
 
 
 @RestController
@@ -24,12 +24,17 @@ class MainController:
         return ResponseEntity.ok([result() for result in results])
 
     def generate_code(self):
-        return DispatcherHandler.PATH_PREFIX + 'E:\\Account.java'
+        return File('E:\\temp\\B.zip')
 
-
-if __name__ == '__main__':
+def main():
     port = 8002
     DispatcherHandler.init(globals())
     httpd = HTTPServer(('', port), DispatcherHandler)
-    print("Starting simple_httpd on port: " + str(httpd.server_port))
+    print("Starting HTTP server on port: " + str(httpd.server_port))
     httpd.serve_forever()
+
+
+if __name__ == '__main__':
+    # main()
+    pass
+    
