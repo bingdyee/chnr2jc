@@ -1,0 +1,21 @@
+package ${package}.${module}.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ${package}.${module}.api.${className}Api;
+
+/**
+ *  ${comments} Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("/api")
+public class ${className}Controller {
+
+    @Autowired
+    private ${className}Api ${varName}Api;
+
+}

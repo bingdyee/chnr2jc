@@ -4,6 +4,7 @@ from core.dispatcher import DispatcherHandler, RestController
 from core.jdbc import JdbcTemplate
 from core.mapper import *
 from core.result import ResponseEntity, File
+from utils.commons import format_time
 
 
 @RestController
@@ -36,5 +37,19 @@ def main():
 
 if __name__ == '__main__':
     # main()
-    pass
+    import tenjin
+    from tenjin.helpers import *
+
+    context = {
+        'packageName': 'org.warless.cogen',
+        'module': 'test',
+        'className': 'Test',
+        'columns': ['A', 'B'],
+        ''
+    }
+
+    engine = tenjin.Engine(path=['templates'])
+
+    html = engine.render('Test.java', context)
+    print(html)
     

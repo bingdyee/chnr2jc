@@ -8,12 +8,12 @@ package ${package}.${module}.pojo;
  */
 public class ${className} {
 
-#foreach ($column in $columns)
+<?py for column in columns: ?>
     /**$column.columnComment */
     private $column.dataType $column.columnName;
-#end
+<?py #endfor ?>
 
-#foreach ($column in $columns)
+<?py for column in columns: ?>
     public void set${column.methodName}($column.dataType $column.columnName) {
         this.$column.columnName = $column.columnName;
     }
@@ -22,5 +22,5 @@ public class ${className} {
         return $column.columnName;
     }
 
-#end
+<?py #endfor ?>
 }
