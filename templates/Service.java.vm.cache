@@ -1,0 +1,12 @@
+timestamp: 1563366009.7122908
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service;\r
+\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Mapper\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r
+public interface ''', _escape(_to_str(className)), '''Service {\r
+}\r\n''', ));

@@ -1,0 +1,22 @@
+timestamp: 1563546234.199196
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; 
+if zteng:
+    _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.ao;\r\n''', ));
+else:
+    _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.api;\r\n''', ));
+#endif
+_extend(('''\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Api\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r\n''', ));
+if zteng:
+    _extend(('''public interface ''', _escape(_to_str(className)), '''AoService {\r\n''', ));
+else:
+    _extend(('''public interface ''', _escape(_to_str(className)), '''Api {\r\n''', ));
+#endif
+_extend(('''\r
+}''', ));

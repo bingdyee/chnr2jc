@@ -1,0 +1,22 @@
+package ${package}.${module}.pojo;
+
+import java.io.Serializable;
+import ${package}.${module}.pojo.po.${className};
+<?py if hasDate: ?>
+import java.util.Date;
+<?py #endif ?>
+<?py if hasDecimal: ?>
+import java.math.BigDecimal;
+<?py #endif ?>
+
+/**
+ *  ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public class ${className}VO extends ${className} implements Serializable {
+
+    private static final long serialVersionUID = ${serialVersionUID}L;
+
+}

@@ -1,0 +1,23 @@
+timestamp: 1563799426.46063
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.impl;\r
+\r
+import org.springframework.beans.factory.annotation.Autowired;\r
+import org.springframework.stereotype.Service;\r
+import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.mapper.AccountMapper;\r
+import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.AccountService;\r
+\r
+\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Mapper\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r
+@Service\r
+public class ''', _escape(_to_str(className)), '''ServiceImpl implements ''', _escape(_to_str(className)), '''Service {\r
+\r
+    @Autowired\r
+    private ''', _escape(_to_str(className)), '''Mapper ''', _escape(_to_str(varName)), '''Mapper;\r
+\r
+}\r\n''', ));

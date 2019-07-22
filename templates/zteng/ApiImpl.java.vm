@@ -1,0 +1,36 @@
+<?py if zteng: ?>
+package ${package}.${module}.service.ao.impl;
+<?py else: ?>
+package ${package}.${module}.api.impl;
+<?py #endif ?>
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+<?py if zteng: ?>
+import ${package}.${module}.service.ao.${className}AoService;
+import ${package}.${module}.service.bo.${className}Service;
+<?py else: ?>
+import ${package}.${module}.api.${className}Api;
+import ${package}.${module}.service.${className}Service;
+<?py #endif ?>
+
+
+
+/**
+ *  ${comments} Api
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+<?py if zteng: ?>
+public class ${className}AoServiceImpl implements ${className}AoService {
+<?py else: ?>
+public class ${className}ApiImpl implements ${className}Api {
+<?py #endif ?>
+
+    @Autowired
+    private ${className}Service ${varName}Service;
+
+
+}

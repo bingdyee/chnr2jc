@@ -1,0 +1,31 @@
+timestamp: 1563799426.3862753
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.controller;\r
+\r
+import org.springframework.beans.factory.annotation.Autowired;\r
+import org.springframework.web.bind.annotation.RequestMapping;\r
+import org.springframework.web.bind.annotation.RestController;\r\n''', ));
+if zteng:
+    _extend(('''import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.ao.''', _escape(_to_str(className)), '''AoService;\r\n''', ));
+else:
+    _extend(('''import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.api.''', _escape(_to_str(className)), '''Api;\r\n''', ));
+#endif
+_extend(('''\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Controller\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r
+@RestController\r
+@RequestMapping("/api")\r
+public class ''', _escape(_to_str(className)), '''Controller {\r
+\r
+    @Autowired\r\n''', ));
+if zteng:
+    _extend(('''    private ''', _escape(_to_str(className)), '''AoService ''', _escape(_to_str(varName)), '''AoService;\r\n''', ));
+else:
+    _extend(('''    private ''', _escape(_to_str(className)), '''Api ''', _escape(_to_str(varName)), '''Api;\r\n''', ));
+#endif
+_extend(('''\r
+}\r\n''', ));

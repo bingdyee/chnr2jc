@@ -1,0 +1,39 @@
+timestamp: 1563799426.3628583
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; 
+if zteng:
+    _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.ao.impl;\r\n''', ));
+else:
+    _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.api.impl;\r\n''', ));
+#endif
+_extend(('''\r
+import org.springframework.beans.factory.annotation.Autowired;\r
+import org.springframework.stereotype.Service;\r\n''', ));
+if zteng:
+    _extend(('''import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.ao.''', _escape(_to_str(className)), '''AoService;\r
+import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.bo.''', _escape(_to_str(className)), '''Service;\r\n''', ));
+else:
+    _extend(('''import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.api.''', _escape(_to_str(className)), '''Api;\r
+import ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.service.''', _escape(_to_str(className)), '''Service;\r\n''', ));
+#endif
+_extend(('''\r
+\r
+\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Api\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r
+@Service\r\n''', ));
+if zteng:
+    _extend(('''public class ''', _escape(_to_str(className)), '''AoServiceImpl implements ''', _escape(_to_str(className)), '''AoService {\r\n''', ));
+else:
+    _extend(('''public class ''', _escape(_to_str(className)), '''ApiImpl implements ''', _escape(_to_str(className)), '''Api {\r\n''', ));
+#endif
+_extend(('''\r
+    @Autowired\r
+    private ''', _escape(_to_str(className)), '''Service ''', _escape(_to_str(varName)), '''Service;\r
+\r
+\r
+}\r\n''', ));

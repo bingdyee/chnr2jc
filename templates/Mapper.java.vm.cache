@@ -1,0 +1,18 @@
+timestamp: 1563365917.7840853
+
+_extend=_buf.extend;_to_str=to_str;_escape=escape; _extend(('''package ''', _escape(_to_str(package)), '''.''', _escape(_to_str(module)), '''.mapper;\r
+\r
+import org.apache.ibatis.annotations.Mapper;\r
+\r
+/**\r
+ *  ''', _escape(_to_str(comments)), ''' Mapper\r
+ *\r
+ * @author ''', _escape(_to_str(author)), '''\r
+ * @date ''', _escape(_to_str(datetime)), '''\r
+ */\r
+@Mapper\r
+public interface ''', _escape(_to_str(className)), '''Mapper {\r
+\r
+\r
+\r
+}\r\n''', ));
