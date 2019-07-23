@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from typing import List
 from .jdbc import mapper
 from .models import Table, Column

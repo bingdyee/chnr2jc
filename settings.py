@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
 # MySQL Config
 DB_HOST = 'localhost'
 DB_PORT = 3306
-DB_NAME = 'code_generator'
+DB_NAME = 'dormitory_system'
 DB_USER = 'root'
 DB_PASSWORD = 'root'
-DB_CHARSET = 'utf8mb4'
+DB_CHARSET = 'utf8'
 
 
 # Type Mapping

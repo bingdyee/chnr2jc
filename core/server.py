@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from .webpy import DispatcherHandler, RestController, ResponseEntity, File
 from .mapper import *

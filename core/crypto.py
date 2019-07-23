@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import os
 from binascii import b2a_hex, a2b_hex
 from Crypto.PublicKey import RSA
