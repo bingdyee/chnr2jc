@@ -3,11 +3,8 @@ package ${package}.${module}.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-<?py if zteng: ?>
-import ${package}.${module}.service.ao.${className}AoService;
-<?py else: ?>
 import ${package}.${module}.api.${className}Api;
-<?py #endif ?>
+
 
 /**
  *  ${comments} Controller
@@ -20,10 +17,6 @@ import ${package}.${module}.api.${className}Api;
 public class ${className}Controller {
 
     @Autowired
-    <?py if zteng: ?>
-    private ${className}AoService ${varName}AoService;
-    <?py else: ?>
     private ${className}Api ${varName}Api;
-    <?py #endif ?>
 
 }

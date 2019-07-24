@@ -1,8 +1,5 @@
-<?py if zteng: ?>
-package ${package}.${module}.service.ao;
-<?py else: ?>
 package ${package}.${module}.api;
-<?py #endif ?>
+
 
 /**
  *  ${comments} Api
@@ -10,10 +7,7 @@ package ${package}.${module}.api;
  * @author ${author}
  * @date ${datetime}
  */
-<?py if zteng: ?>
-public interface ${className}AoService {
-<?py else: ?>
 public interface ${className}Api {
-<?py #endif ?>
+
 
 }
