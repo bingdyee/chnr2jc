@@ -1,0 +1,36 @@
+package ${table.entity_pkg};
+
+% for pkg in table.pkgs:
+import ${pkg};
+%endfor
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * ${table.comment}
+ *
+ * @author ${project.author}
+ * @since ${project.since}
+ */
+@Getter
+@Setter
+@ToString
+@TableName("${table.name}")
+public class ${table.entity_name} {
+
+% for field in table.fields:
+    /**
+     *${field.comment}
+     */
+    % if field.primary_key:
+    @TableId(value = "${field.name}", type = IdType.ASSIGN_ID)
+    % endif
+    % if field.common:
+    @TableField(value = "${field.name}", fill = FieldFill.INSERT_UPDATE)
+    % endif
+    private ${field.type} ${field.prop_name};
+%endfor
+
+}

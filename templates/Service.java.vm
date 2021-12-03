@@ -1,10 +1,59 @@
-package ${package}.${module}.service;
+package  ${table.service_pkg};
 
-/**
- *  ${comments} Mapper
+
+import com.shudazy.deliver.common.bean.Pages;
+import ${table.dto_pkg}.${table.dto_clz};
+import ${table.query_pkg}.${table.query_clz};
+import ${table.vo_pkg}.${table.vo_clz};
+
+import java.util.List;
+
+ /**
+ * ${table.comment} 服务层接口
  *
- * @author ${author}
- * @date ${datetime}
+ * @author ${project.author}
+ * @since ${project.since}
  */
-public interface ${className}Service {
+public interface ${table.service_clz} {
+
+    /**
+     * 新增${table.comment}
+     *
+     * @param ${table.prop_name} ${table.comment}VO
+     * @return 影响行数
+     */
+    int create(${table.vo_clz} ${table.prop_name});
+
+    /**
+     * 删除${table.comment}
+     *
+     * @param ids ${table.comment}编号列表
+     * @return 影响行数
+     */
+    int remove(List<Long> ids);
+
+    /**
+     * 修改${table.comment}
+     *
+     * @param ${table.prop_name} ${table.comment}VO
+     * @return 影响行数
+     */
+    int update(${table.vo_clz} ${table.prop_name});
+
+    /**
+     * ${table.comment}详情
+     *
+     * @param id ${table.comment}编号
+     * @return 详情
+     */
+    ${table.dto_clz} detail(Long id);
+
+    /**
+     * 分页查询${table.comment}
+     *
+     * @param query 查询条件
+     * @return ${table.comment}分页数据
+     */
+    Pages<${table.dto_clz}> queryPage(${table.query_clz} query);
+
 }

@@ -1,0 +1,32 @@
+package ${table.query_pkg};
+
+
+% for pkg in table.pkgs:
+import ${pkg};
+%endfor
+import ${project.base_pkg}.common.bean.PageQuery;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+/**
+ * ${table.comment} 查询条件
+ *
+ * @author ${project.author}
+ * @since ${project.since}
+ */
+@Getter
+@Setter
+@ToString
+@ApiModel(description = "${table.comment}查询条件")
+public class ${table.query_clz} extends PageQuery {
+
+% for field in table.fields:
+    @ApiModelProperty(value = "${field.comment}")
+    private ${field.type} ${field.prop_name};
+
+%endfor
+}

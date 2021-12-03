@@ -1,16 +1,16 @@
-package ${package}.${module}.mapper;
+package ${table.mapper_pkg};
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ${table.entity_pkg}.${table.entity_name};
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- *  ${comments} Mapper
+ * ${table.comment} DAO
  *
- * @author ${author}
- * @date ${datetime}
+ * @author ${project.author}
+ * @since ${project.since}
  */
 @Mapper
-public interface ${className}Mapper {
-
-
+public interface ${table.mapper_clz} extends BaseMapper<${table.entity_name}> {
 
 }

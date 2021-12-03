@@ -1,0 +1,19 @@
+package ${project.base_pkg};
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * ${project.name}启动
+ *
+ * @author Bing D. Yee
+ * @since 2021/11/10
+ */
+@SpringBootApplication
+public class ${project.full_name}Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(${project.full_name}Application.class, args);
+    }
+
+}

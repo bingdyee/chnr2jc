@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${package}.${module}.mapper.${className}Mapper">
+<mapper namespace="${table.mapper_pkg}.${table.mapper_clz}">
 
-    <sql id="Base_Column_List">
-    <?py for i in range(len(columns) - 1): ?>
-        ${columns[i].column_name} AS ${columns[i].var_name},
-    <?py #endfor ?>
-        ${columns[len(columns)-1].column_name} AS ${columns[len(columns)-1].var_name}
-    </sql>
 
 </mapper>

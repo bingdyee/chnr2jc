@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>${project.base_pkg}</groupId>
+        <artifactId>${project.name}</artifactId>
+        <version>${"${revision}"}</version>
+    </parent>
+    <artifactId>${module.pro_name}</artifactId>
+    <description>${module.comment}</description>
+    % if module.dependencies:
+    <dependencies>
+    % for dependency in module.dependencies:
+        <dependency>
+            <groupId>${project.base_pkg}</groupId>
+            <artifactId>${dependency}</artifactId>
+            <version>${"${revision}"}</version>
+        </dependency>
+    % endfor
+    </dependencies>
+    % endif
+
+    % if module.pro_name.endswith('startup'):
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <excludes>
+                <exclude>config/application*.yml</exclude>
+            </excludes>
+        </resource>
+        <resource>
+            <filtering>true</filtering>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>application.yml</include>
+                <include>config/application-${"${profiles.active}"}.yml</include>
+            </includes>
+        </resource>
+        </resources>
+        <plugins>
+            <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${"${spring-boot.version}"}</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+            </plugin>
+        </plugins>
+    </build>
+    % endif
+    
+</project>

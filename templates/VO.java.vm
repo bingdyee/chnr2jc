@@ -1,36 +1,44 @@
-package ${package}.${module}.pojo;
+package ${table.vo_pkg};
 
+% for pkg in table.pkgs:
+import ${pkg};
+%endfor
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.validation.constraints.*;
 import java.io.Serializable;
-<?py if hasDate: ?>
-import java.util.Date;
-<?py #endif ?>
-<?py if hasDecimal: ?>
-import java.math.BigDecimal;
-<?py #endif ?>
 
 /**
- *  ${comments}
+ * ${table.comment} VO
  *
- * @author ${author}
- * @date ${datetime}
+ * @author ${project.author}
+ * @since ${project.since}
  */
-public class ${className}VO implements Serializable {
+@Getter
+@Setter
+@ToString
+@ApiModel(description = "${table.comment}VO")
+public class ${table.vo_clz} implements Serializable {
 
-    private static final long serialVersionUID = ${serialVersionUID}L;
+    private static final long serialVersionUID = ${sv_uid}L;
 
-<?py for column in columns: ?>
-    /**${column.column_comment} */
-    private ${column.data_type} ${column.var_name};
-<?py #endfor ?>
+% for field in table.fields:
+% if not field.common:
+    % if field.length:
+    @Size(max = ${field.length}, message = "${field.comment}长度超出限制")
+    % endif
+    % if field.type == 'String' and field.not_null:
+    @NotBlank(message = "请输入${field.comment}")
+    % elif not field.primary_key and field.not_null:
+    @NotNull(message = "请输入${field.comment}")
+    %endif
+    @ApiModelProperty(value = "${field.comment}")
+    private ${field.type} ${field.prop_name};
 
-<?py for column in columns: ?>
-    public void set${column.method_name}(${column.data_type} ${column.var_name}) {
-        this.${column.var_name} = ${column.var_name};
-    }
-
-    public ${column.data_type} get#{column.method_name}() {
-        return this.${column.var_name};
-    }
-
-<?py #endfor ?>
+% endif
+% endfor
 }

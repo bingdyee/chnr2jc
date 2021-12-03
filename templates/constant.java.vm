@@ -1,0 +1,25 @@
+package ${module.pkg_name};
+
+/**
+ * 字典枚举
+ *
+ * @author ${project.author}
+ * @since ${project.since}
+ */
+public class ${module.constant_clz} {
+
+    % for _dict in module.dicts:
+    /**
+     * 字典宏名：${_dict.name}
+     */
+    public static final String ${_dict.sign} = "${_dict.sign}";
+    % for enum in _dict.enums:
+    /**
+     * ${_dict.name} - ${enum.name}
+     */
+    public static final int ${enum.sign} = ${enum.code};
+    % endfor
+
+    %endfor
+
+}

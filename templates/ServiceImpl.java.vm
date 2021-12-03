@@ -1,21 +1,68 @@
-package ${package}.${module}.service.impl;
+package  ${table.service_impl_pkg};
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import ${project.base_pkg}.common.bean.Pages;
+import ${project.base_pkg}.common.exception.BizServerException;
+import ${project.base_pkg}.common.utils.BeanConverter;
+import ${table.mapper_pkg}.${table.mapper_clz};
+import ${table.dto_pkg}.${table.dto_clz};
+import ${table.entity_pkg}.${table.entity_name};
+import ${table.query_pkg}.${table.query_clz};
+import ${table.vo_pkg}.${table.vo_clz};
+import ${table.service_pkg}.${table.service_clz};
 import org.springframework.stereotype.Service;
-import ${package}.${module}.mapper.AccountMapper;
-import ${package}.${module}.service.AccountService;
+
+import java.util.List;
 
 
 /**
- *  ${comments} Mapper
+ * ${table.comment}服务层实现
  *
- * @author ${author}
- * @date ${datetime}
+ * @author ${project.author}
+ * @since ${project.since}
  */
 @Service
-public class ${className}ServiceImpl implements ${className}Service {
+public class ${table.service_impl_clz} implements ${table.service_clz} {
 
-    @Autowired
-    private ${className}Mapper ${varName}Mapper;
+    private final ${table.mapper_clz} ${table.mapper_prop_name};
+
+    public ${table.service_impl_clz}(${table.mapper_clz} ${table.mapper_prop_name}) {
+        this.${table.mapper_prop_name} = ${table.mapper_prop_name};
+    }
+
+    @Override
+    public int create(${table.vo_clz} ${table.prop_name}) {
+        return this.${table.mapper_prop_name}.insert(BeanConverter.convert(${table.prop_name}, ${table.entity_name}.class));
+    }
+
+    @Override
+    public int remove(List<Long> ids) {
+        return this.${table.mapper_prop_name}.deleteBatchIds(ids);
+    }
+
+    @Override
+    public int update(${table.vo_clz} ${table.prop_name}) {
+        return this.${table.mapper_prop_name}.updateById(BeanConverter.convert(${table.prop_name}, ${table.entity_name}.class));
+    }
+
+    @Override
+    public ${table.dto_clz} detail(Long id) {
+        ${table.entity_name} ${table.prop_name} = this.${table.mapper_prop_name}.selectById(id);
+        if (${table.prop_name} == null) {
+            throw new BizServerException("不存在该条记录");
+        }
+        return BeanConverter.convert(${table.prop_name}, ${table.dto_clz}.class);
+    }
+
+    @Override
+    public Pages<${table.dto_clz}> queryPage(${table.query_clz} query) {
+        Page<${table.entity_name}> page = Page.of(query.getPageNo(), query.getPageSize());
+        LambdaQueryWrapper<${table.entity_name}> queryWrapper = new LambdaQueryWrapper<>();
+        Page<${table.entity_name}> ${table.prop_name}Page = this.${table.prop_name}Mapper.selectPage(page, queryWrapper);
+        List<${table.dto_clz}> result = BeanConverter.convertList(${table.prop_name}Page.getRecords(), ${table.dto_clz}.class);
+        return Pages.of(result, page.getSize(), page.getCurrent(), page.getTotal());
+    }
 
 }
