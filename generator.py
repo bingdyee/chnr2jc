@@ -4,8 +4,7 @@ from output import ProjectContributor
 
 
 if __name__ == '__main__':
-    chnr_file = 'docs/deliver.chnr.json'
-    # chnr_file = 'docs/archetype-demo.chnr.json'
+    chnr_file = 'docs/archetype-demo.chnr.json'
 
     ProjectContributor(ChnrParser(chnr_file).parse()) \
         .add_next(output.ParentModuleContributor) \
