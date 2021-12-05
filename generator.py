@@ -12,4 +12,3 @@ if __name__ == '__main__':
         .add_next(output.StartupModuleContributor) \
         .add_next(output.ModuleContributor) \
         .output()
-
