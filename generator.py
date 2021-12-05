@@ -1,14 +1,18 @@
 import output
-from chnr_parser import ChnrParser
-from output import ProjectContributor
+from parser import ChnrParser
 
 
-if __name__ == '__main__':
+def main():
     chnr_file = 'docs/archetype-demo.chnr.json'
-
-    ProjectContributor(ChnrParser(chnr_file).parse()) \
+    parser = ChnrParser(chnr_file)
+    project = parser.parse()
+    output.ProjectContributor(project) \
         .add_next(output.ParentModuleContributor) \
         .add_next(output.CommonModuleContributor) \
         .add_next(output.StartupModuleContributor) \
         .add_next(output.ModuleContributor) \
         .output()
+
+
+if __name__ == '__main__':
+    main()
